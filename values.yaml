@@ -1,0 +1,30 @@
+neo4j:
+  name: genai-studio
+  resources:
+    cpu: "0.5"
+    memory: "2Gi"
+
+  # Uncomment to set the initial password
+  password: "Hello-GenA1"
+
+  # Uncomment to use enterprise edition
+  #edition: "enterprise"
+  #acceptLicenseAgreement: "yes"
+
+volumes:
+  data:
+    mode: dynamic
+    dynamic:
+      storageClassName: microk8s-hostpath
+      requests:
+        storage: 100Gi
+
+env:
+  NEO4J_PLUGINS: '["apoc"]'
+
+config:
+  dbms.security.procedures.allowlist: "apoc.*"
+  dbms.security.procedures.unrestricted: "apoc.*"
+  apoc.export.file.enabled: "true"
+  apoc.import.file.enabled: "true"
+  apoc.import.file.use_neo4j_config: "true"
